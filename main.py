@@ -19,11 +19,8 @@ price = [float(price[1:]) for price in game_price] # Превращает в ф�
 game = len(gamel)
 n_game = []
 n_price = []
-print(game)
-print(placer)
-print(linker)
-
-
+#get / update
+#получение данных / обновление данных
 try:
     # Удаление старых данных
     delete_query = "DELETE FROM xbox"
@@ -32,7 +29,7 @@ try:
     count = -1
     while count != game:
         count = count + 1
-        if price[count] > 6:
+        if price[count] > 20:
             continue
         Title = gamel[count]
         Price = price[count]
@@ -47,8 +44,26 @@ try:
 except:
     None
 
-print(n_game)
-print(n_price)
+#Get from DB and print
+#Получение из БД и вывод
+try:
+    # Выполнение SQL-запроса для выборки данных
+    sql = "SELECT Title, Price FROM xbox"
+    cursor.execute(sql)
+
+    # Получение результатов запроса
+    results = cursor.fetchall()
+
+    # Вывод данных
+    for row in results:
+        title = row[0]
+        price = row[1]
+        print("Title:", title)
+        print("Price:", price)
+
+except mysql.connector.Error as error:
+    print("Ошибка при выполнении запроса:", error)
+
 cursor.close()
 conn.close()
 
